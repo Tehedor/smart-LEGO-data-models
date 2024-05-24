@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/schema",
     "$schemaVersion": "0.0.1",
-    "$id": "https://github.com/Tehedor/smart-LEGO-data-models.git/LegoBuildOrComponent/schema.json",
+    "$id": "https://github.com/Tehedor/smart-LEGO-data-models/blob/main/LegoBuildOrComponent/schema.json",  
     "title": "Smart Data models - LegoBuildOrComponent schema",
     "modelTags": "LEGO",
     "description": "This entity models a LEGO Building or Component that will belong to a LEGO city. This entity will have all the properties of these components.",

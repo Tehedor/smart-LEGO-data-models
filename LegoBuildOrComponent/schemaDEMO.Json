@@ -1,0 +1,62 @@
+// Instructions for creating your schema
+// 1.- respect the HEADER
+// 2.- there are 8 types of examples field1XXX to field9XXX
+// HEADER ***Do not change any of these till next warning***
+$schema =   http://json-schema.org/schema
+$schemaVersion = 0.0.1
+$id = https://smart-LEGO-data-models.github.io/LegoBuildOrComponent/schema.json
+title = Smart Data models - LegoBuildOrComponent schema
+modelTags = LEGO
+description = This entity models a LEGO Building or Component that will belong to a LEGO city. This entity will have all the properties of these components.
+type = object
+// required[] = id, type
+allOf[0]
+  $ref=https://smart-data-models.github.io/data-models/common-schema.json#/definitions/GSMA-Commons
+allOf[1]
+  $ref=https://smart-data-models.github.io/data-models/common-schema.json#/definitions/Location-Commons
+// HEADER  ***this is the end of the header ***
+// you can start configuring this   
+allOf[2]
+  properties
+
+    type
+      type = string
+      enum[] s = LegoBuildOrComponent
+      description = Property. Model:'https://schema.org/Text'. Type of the entity
+    
+    category
+      type = string
+      description = Property. Model:'https://schema.org/Text'. Type of construction/component of LEGO depending on its function
+      enum[] s = bakehouse, barn, bridge, building, bungalow, bunker, busStop, cabin, carport, cathedral, cemetery, chapel, church, civic, commercial, conservatory, construction, cowshed, crane, detached, digester, dormitory, farm, farm_auxiliary, garage, garages, garbage_shed, grandstand, greenhouse, hangar, hospital, hotel, house, houseboat, hut, industrial, kindergarten, kiosk, metroStop, mosque, office, park, parking, pavilion, public, radar, railroadSwitch, residential, retail, riding_hall, road, roof, ruins, school, service, shed, shrine, stable, stadium, static_caravan, streetlight, sty, synagogue, temple, terrace, toll, trafficLight, train, train_station, tramStop, transformer_tower, transportation, tunnel, university, warehouse, water_tower, wheatherStation
+    occupier
+      type = array
+      description = Relationship. Person or entity using the building. Model:'https://schema.org/URL'
+      items
+        $ref = https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType
+
+    openingHours
+      type = array
+      description = Property. Model:'https://schema.org/openingHours'. Opening hours of this building
+      items
+        type = string
+    
+    collapseRisk
+      type = number
+      minimum number = 0
+      maximum number = 1
+      description = Property. Model:'https://schema.org/Number'. Probability of total collapse of the building
+    
+    peopleCapacity
+      type = number
+      minimum number = 0
+      description = Property. Model:'https://schema.org/Number'. Allowed people present at the building
+
+    peopleOccupancy
+      type = number
+      minimum number = 0
+      description = Property. Model:'https://schema.org/Number'. People present at the building
+
+
+required[] string = id, type
+derivedFrom = ""
+license = ""

@@ -1,0 +1,146 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$schemaVersion": "0.0.1",
+    "$id": "https://github.com/Tehedor/smart-LEGO-data-models.git/LegoBuildOrComponent/schema.json",
+    "title": "Smart Data models - LegoBuildOrComponent schema",
+    "modelTags": "LEGO",
+    "description": "This entity models a LEGO Building or Component that will belong to a LEGO city. This entity will have all the properties of these components.",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/GSMA-Commons"
+        },
+        {
+            "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/Location-Commons"
+        },
+        {
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "LegoBuildOrComponent"
+                    ],
+                    "description": "Property. Model:'https://schema.org/Text'. Type of the entity"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "Property. Model:'https://schema.org/Text'. Type of construction/component of LEGO depending on its function",
+                    "enum": [
+                        "bakehouse",
+                        "barn",
+                        "bridge",
+                        "building",
+                        "bungalow",
+                        "bunker",
+                        "busStop",
+                        "cabin",
+                        "carport",
+                        "cathedral",
+                        "cemetery",
+                        "chapel",
+                        "church",
+                        "civic",
+                        "commercial",
+                        "conservatory",
+                        "construction",
+                        "cowshed",
+                        "crane",
+                        "detached",
+                        "digester",
+                        "dormitory",
+                        "engine",
+                        "farm",
+                        "farm_auxiliary",
+                        "garage",
+                        "garages",
+                        "garbage_shed",
+                        "grandstand",
+                        "greenhouse",
+                        "hangar",
+                        "hospital",
+                        "hotel",
+                        "house",
+                        "houseboat",
+                        "hut",
+                        "industrial",
+                        "kindergarten",
+                        "kiosk",
+                        "metroStop",
+                        "mosque",
+                        "office",
+                        "park",
+                        "parking",
+                        "pavilion",
+                        "public",
+                        "radar",
+                        "railroadSwitch",
+                        "residential",
+                        "retail",
+                        "riding_hall",
+                        "road",
+                        "roof",
+                        "ruins",
+                        "school",
+                        "service",
+                        "shed",
+                        "shrine",
+                        "stable",
+                        "stadium",
+                        "static_caravan",
+                        "streetlight",
+                        "sty",
+                        "synagogue",
+                        "temple",
+                        "terrace",
+                        "toll",
+                        "trafficLight",
+                        "train",
+                        "train_station",
+                        "tramStop",
+                        "transformer_tower",
+                        "transportation",
+                        "tunnel",
+                        "university",
+                        "warehouse",
+                        "water_tower",
+                        "wheatherStation"
+                    ]
+                },
+                "occupier": {
+                    "type": "array",
+                    "description": "Relationship. Person or entity using the building. Model:'https://schema.org/URL'",
+                    "items": {
+                        "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+                    }
+                },
+                "openingHours": {
+                    "type": "array",
+                    "description": "Property. Model:'https://schema.org/openingHours'. Opening hours of this building",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "collapseRisk": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Property. Model:'https://schema.org/Number'. Probability of total collapse of the building"
+                },
+                "peopleCapacity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Property. Model:'https://schema.org/Number'. Allowed people present at the building"
+                },
+                "peopleOccupancy": {
+                    "type": "number",
+                    "minimum": 0,
+                    "description": "Property. Model:'https://schema.org/Number'. People present at the building"
+                }
+            }
+        }
+    ],
+    "required": [
+        "id",
+        "type"
+    ]
+}

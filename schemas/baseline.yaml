@@ -1,0 +1,461 @@
+--- 
+components: 
+  schemas: 
+
+
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+    ############ ############ LegoCity 
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+    LegoCity:
+      title: "LegoCity"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building"
+
+
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+    ############ ############ Entities 
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+    # This is reduced list of the defined building categories within
+    # the Smart AgriFood domain
+    BuildingLegoCategories: 
+      enum:
+        - LegoStreetLight
+        - LegoTrain
+        - LegoRadar
+        - LegoRailoadSwitch
+        - LegoToll
+        - LegoCrane
+        - LegoWheaterStation
+        
+      description: |
+        - `LegoStreetLight` -  A street light, light pole, lamppost, street lamp, light standard, or lamp standard is a raised source of light on the edge of a road or path.
+        - `LegoTrain` - A train is a form of rail transport consisting of a series of connected vehicles that generally run along a railroad track to transport cargo or passengers.
+        - `LegoRadar` - Radar is a detection system that uses radio waves to determine the range, angle, or velocity of objects.
+        - `LegoRailoadSwitch` - A railroad switch, turnout, or points is a mechanical installation enabling railway trains to be guided from one track to another, such as at a railway junction or where a spur or siding branches off.
+        - `LegoToll` - A toll road, also known as a turnpike or tollway, is a public or private road for which a fee is assessed for passage.
+        - `LegoCrane` - A crane is a type of machine, generally equipped with a hoist rope, wire ropes or chains, and sheaves, that can be used both to lift and lower materials and to move them horizontally.
+        - `LegoWheaterStation` - A weather station is a facility, either on land or sea, with instruments and equipment for measuring atmospheric conditions to provide information for weather forecasts and to study the weather and climate.
+
+      type: string
+      externalDocs: 
+        url: "https://wiki.openstreetmap.org/wiki/Map_Features#Building"
+      x-ngsi: 
+        uri-prefix: "https://wiki.openstreetmap.org/wiki/Tag:building%3D"
+
+
+    # This is the base definition of a building
+    LegoStreetLight: 
+      title: "LegoStreetLight"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building"
+
+      properties:
+
+        # # Sensors for the street light
+        presence:
+          $ref: "#/components/schemas/pirSensor"
+        lightIntensity:
+          $ref: "#/components/schemas/photoresistorSensor"
+        # pirSensor:
+        #   $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/motion
+        # ledDetection:
+        #   $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/sensor
+
+
+        # # Actuator for the street light
+        stateLed:
+          $ref: "#/components/schemas/ledDetection"
+        stateLight:
+          $ref: "#/components/schemas/light"
+        # ledDetection:
+        #   $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/temperature
+        # light:
+        #   $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/fillingLevel
+
+
+    LegoTrain:
+      title: "LegoTrain"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building" 
+      properties:
+        # Sensors for the train
+
+        velocityControl:
+          $ref: "#/components/schemas/potentiometerSensor"
+
+        # Actuator for the train
+        velocityEngine:
+          $ref: "#/components/schemas/engineDC"
+        
+
+    LegoRadar:
+      title: "LegoRadar"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building" 
+      properties:
+        # Sensors for the radar
+        presence:
+          $ref: "#/components/schemas/infraredSensor"
+        
+        # Actuator for the radar
+        on:
+          $ref: "#/components/schemas/camera"
+        # camera:
+          # $ref: "#/components/schemas/camera"
+
+
+    LegoRailoadSwitch:
+      title: "LegoRailoadSwitch"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building" 
+      properties:
+        # Sensors for the railroad switch
+        state:
+          $ref: "#/components/schemas/switchSensor"
+
+        # Actuator for the railroad switch
+        stateMotor:
+          $ref: "#/components/schemas/servmotor"
+        # servmotor:
+          # $ref: "#/components/schemas/servmotor"
+    
+    
+    LegoToll:
+      title: "LegoToll"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building" 
+      properties:
+        # Sensors for the toll
+        uiddcode:
+          $ref: "#/components/schemas/rfidSensor"
+
+    LegoCrane:
+      title: "LegoCrane"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building" 
+      properties:
+        # Sensors for the crane
+        distance:
+          $ref: "#/components/schemas/ultrasondSensor"
+
+        # Actuator for the toll
+        # value:
+          # $ref: "#/components/schemas/value"
+    LegoWheaterStation:
+      title: "LegoWheaterStation"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building"
+      properties:
+        # Sensors for the wheater station
+        temperature:
+          $ref: "#/components/schemas/temperatureSensor"
+        humidity:
+          $ref: "#/components/schemas/humiditySensor"
+  
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+    ############ ############ Sensors 
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+    
+    #PIR 
+    pirSensor:
+      type: object
+      required:
+        -  presence
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+
+      description: >
+        A device that consists of a sensor, has category `saref:Sensor` and is used to detect the presence of a person in a room.
+
+      properties:
+        presence:
+          x-ngsi:
+            uri: https://w3id.org/saref#Occupancy
+            model: 'https://schema.org/Text'
+          type: string
+          description: 'Presence of a person in the room, either HIGH or LOW'
+
+
+    # Photoresistor
+    photoresistorSensor:
+      type: object
+      required:
+        - lightIntensity
+        - dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        A device that consists of a sensor, has category `saref:Sensor` and is used to detect the light intensity.
+
+      properties:
+        lightIntensity:
+          x-ngsi:
+            uri: https://w3id.org/saref#IlluminanceUnit
+            model: 'https://schema.org/Number'
+          type: number
+          description: 'Light intensity detected by the photoresistor sensor'
+
+
+    # Potentiometer
+    potentiometerSensor:
+      type: object
+      required:
+        -  velocityControl
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      
+      description: >
+        A device that consists of a sensor, has category `saref:Sensor` and is used to detect the position of a switch to select the engine speed, it has values from 0 to 128.
+      properties:
+        velocityControl:
+          x-ngsi:
+            uri: https://w3id.org/saref#LevelControlFunction
+            model: 'https://schema.org/Number'
+          type: integer
+          description: 'Position of the switch to select the engine speed, it has values from 0 to 128'
+
+    # Infrared
+    infraredSensor:
+      type: object
+      required:
+        -  presence
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        A device that consists of a sensor, has category `saref:Sensor` and is used to detect if a train passes by a point.
+      
+      properties:
+        presence:
+          x-ngsi:
+            uri: https://w3id.org/saref#Occupancy
+            model: 'https://schema.org/Text'
+          type: string
+          description: 'HIGH if pass a train o LOW if not pass a train'
+
+
+    # Switch
+    switchSensor:
+      type: object
+      required:
+        -  state
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+
+      description: >
+        A device that consists of a sensor, has category `saref:Sensor` and is used to detect the state of a switch, on or off.
+
+      properties:
+        state:
+          x-ngsi:
+            uri: https://w3id.org/saref#OnOffState
+            model: 'https://schema.org/Text'
+          type: string
+          description: 'State of the switch, either on or off'
+      
+
+
+
+    # # RFID
+    rfidSensor:
+      type: object
+      required:
+        -  uiddcode
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+
+      description: >
+        A device that consists of a sensor is categorized as `saref:Sensor` and is used to detect an object based on a tag.
+
+      properties:
+        uiddcode:
+          x-ngsi:
+            uri: https://schema.org/leiCode
+            model: 'https://schema.org/Text'
+          type: string
+          description: 'Unique identifier of the object detected by the RFID sensor'
+
+
+
+    # # Ultrasond
+    ultrasondSensor:
+      type: object
+      required:
+        -  distance
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      
+      description: >
+        A device that consists of a sensor, has categor7y `saref:Sensor` and is used to calculate the distance by ultrasound, where the distance to the object can be calculated from a time interval.
+
+      properties:
+        distance:
+            x-ngsi:
+              model: https://schema.org/Distance
+              type: Property
+            type: number
+            description: 'Location of this device represented by a distance from a starting point. All units are accepted in [CEFACT](https://www.unece.org/cefact.html) code'
+
+
+
+    # Temperature
+    temperatureSensor:
+      type: object
+      required:
+        -  temperature
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+
+      description: >
+        A device that consists of a sensor, has category `saref:Sensor` and is used for the purpose of sensing temperature`.
+      
+      properties:
+        temperature:
+          # $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/temperature
+          # https://w3id.org/saref#TemperatureSensor
+            x-ngsi:
+              uri: 'https://w3id.org/saref#temperature'
+              model: 'https://schema.org/Number'  
+            type: number
+            format: float
+            description: Property related to some measurements that are characterized by a certain value that is measured in a temperature unit (degree_Celsius, degree_Fahrenheit, or degree_kelvin)
+
+
+    # Humidity
+    humiditySensor:
+      type: object
+      required:
+        -  humidity
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+
+      description: >
+        A device that consists of a sensor, has category `saref:Sensor` and is used for the purpose of sensing humidity`.
+
+      properties:
+        humidity:
+          x-ngsi:
+            uri: 'https://w3id.org/saref#Humidity'
+            model: 'https://schema.org/Number'
+          type: number
+          format: float
+          description: Property related to some measurements that are characterized by a certain value that is measured in a humidity unit (percentage)
+
+    
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+    ############ ############ Actuators 
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+
+    ledDetection:
+      type: object
+      required:
+        -  stateLed
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        A device that consists of an actuator, has category `saref:Actuator` and is used to represent the state of a led, on or off.
+      properties:
+        stateLed:
+          description: 'A observed or reported value. For actuator devices, it is an attribute that allows a controlling application to change the actuation setting. For instance, a switch device which is currently _on_ can report a value ''on'' of type ''Text''. Obviously, in order to toggle the referred switch, this attribute value will have to be changed to ''off'''
+          type: string
+          x-ngsi:
+            model: https://schema.org/QuantitativeValue
+            type: Property
+
+    light:
+      type: object
+      required:
+        -  stateLight
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        A device that consists of an actuator, has category `saref:Actuator` and is used to represent the state of a light, on or off.
+      properties:
+        stateLight:
+          description: 'A observed or reported value. For actuator devices, it is an attribute that allows a controlling application to change the actuation setting. For instance, a switch device which is currently _on_ can report a value ''on'' of type ''Text''. Obviously, in order to toggle the referred switch, this attribute value will have to be changed to ''off'''
+          type: string
+          x-ngsi:
+            model: https://schema.org/QuantitativeValue
+            type: Property
+
+    engineDC:
+      type: object
+      required:
+        -  velocityEngine
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      description: >
+        A device that consists of an actuator, has category `saref:Actuator` and is used to represent the velocity of a train engine.
+      properties:
+        velocityEngine:
+          description: 'A observed or reported value. For actuator devices, it is an attribute that allows a controlling application to change the actuation setting. For instance, a switch device which is currently _on_ can report a value ''on'' of type ''Text''. Obviously, in order to toggle the referred switch, this attribute value will have to be changed to ''off'''
+          type: string
+          x-ngsi:
+            model: https://schema.org/QuantitativeValue
+            type: Property
+
+    camera:
+      type: object
+      required:
+        -  on
+        -  startDateTime
+        -  mediaURL
+      allOf:
+        # - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+        - $ref: https://smart-data-models.github.io/dataModel.Device/Camera/model.yaml#/Camera
+
+    servmotor:
+      type: object
+      required:
+        -  stateMotor
+        -  dateLastValueReported
+      allOf:
+        - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
+      # El motor tiene dos estados 1 = via servicio y 0 = via normal
+      description: >
+        A device that consists of an actuator, has category `saref:Actuator` and is used to represent the state of a motor, 1 = via service or 2 = via normal.
+      properties:
+        stateMotor:
+          description: 'A observed or reported value. For actuator devices, it is an attribute that allows a controlling application to change the actuation setting. For instance, a switch device which is currently _on_ can report a value ''on'' of type ''Text''. Obviously, in order to toggle the referred switch, this attribute value will have to be changed to ''off'''
+          type: string
+          x-ngsi:
+            model: https://schema.org/QuantitativeValue
+            type: Property
+            
+
+
+
+
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+    ############ ############ ############ ############ ############ ############ ############ ############ ############ 
+
+info: 
+  description: "Model Definitions for an Agricultural Smart System"
+  title: Smart Agri Data Models
+  version: "1.0.0"
+openapi: "3.0.0"
+
+
+# These paths are merely representative.
+paths: 
+  /ngsi-ld/v1/entities: 
+    get: 
+      responses: 
+        ? "200"
+        : 
+          description:  OK
+          content: 
+            application/ld+json: 
+              schema: 
+                type: object

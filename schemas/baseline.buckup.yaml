@@ -18,22 +18,22 @@ components:
     # the Smart AgriFood domain
     BuildingLegoCategories: 
       enum:
-        - legoStreetLight
-        - legoTrain
-        - legoRadar
-        - legoRailoadSwitch
-        - legoToll
-        - legoCrane
-        - legoWheaterStation
+        - LegoStreetLight
+        - LegoTrain
+        - LegoRadar
+        - LegoRailoadSwitch
+        - LegoToll
+        - LegoCrane
+        - LegoWheaterStation
         
       description: |
-        - `legoStreetLight` -  A street light, light pole, lamppost, street lamp, light standard, or lamp standard is a raised source of light on the edge of a road or path.
-        - `legoTrain` - A train is a form of rail transport consisting of a series of connected vehicles that generally run along a railroad track to transport cargo or passengers.
-        - `legoRadar` - Radar is a detection system that uses radio waves to determine the range, angle, or velocity of objects.
-        - `legoRailoadSwitch` - A railroad switch, turnout, or points is a mechanical installation enabling railway trains to be guided from one track to another, such as at a railway junction or where a spur or siding branches off.
-        - `legoToll` - A toll road, also known as a turnpike or tollway, is a public or private road for which a fee is assessed for passage.
-        - `legoCrane` - A crane is a type of machine, generally equipped with a hoist rope, wire ropes or chains, and sheaves, that can be used both to lift and lower materials and to move them horizontally.
-        - `legoWheaterStation` - A weather station is a facility, either on land or sea, with instruments and equipment for measuring atmospheric conditions to provide information for weather forecasts and to study the weather and climate.
+        - `LegoStreetLight` -  A street light, light pole, lamppost, street lamp, light standard, or lamp standard is a raised source of light on the edge of a road or path.
+        - `LegoTrain` - A train is a form of rail transport consisting of a series of connected vehicles that generally run along a railroad track to transport cargo or passengers.
+        - `LegoRadar` - Radar is a detection system that uses radio waves to determine the range, angle, or velocity of objects.
+        - `LegoRailoadSwitch` - A railroad switch, turnout, or points is a mechanical installation enabling railway trains to be guided from one track to another, such as at a railway junction or where a spur or siding branches off.
+        - `LegoToll` - A toll road, also known as a turnpike or tollway, is a public or private road for which a fee is assessed for passage.
+        - `LegoCrane` - A crane is a type of machine, generally equipped with a hoist rope, wire ropes or chains, and sheaves, that can be used both to lift and lower materials and to move them horizontally.
+        - `LegoWheaterStation` - A weather station is a facility, either on land or sea, with instruments and equipment for measuring atmospheric conditions to provide information for weather forecasts and to study the weather and climate.
 
       type: string
       externalDocs: 
@@ -42,243 +42,121 @@ components:
         uri-prefix: "https://wiki.openstreetmap.org/wiki/Tag:building%3D"
 
 
-
     # This is the base definition of a building
-    # LegoStreetLight: 
-    # LegoTrain:
-    # LegoRadar:
-    # LegoRailoadSwitch:
-    # LegoToll:
-    # LegoCrane:
-    # LegoWheaterStation:
-    
-    LegoBuilding:
-      description: >
-        A LegoBuilging is a structure/building made from lego pieces, which can be a train station, a traffic light, a crane, a weather station, a radar, a railroad switch or a toll booth.  
+    LegoStreetLight: 
+      title: "LegoStreetLight"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building"
+
       properties:
-        alternateName:
-          description: An alternative name for this item
-          type: string
-          x-ngsi:
-            type: Property
-        category:
-          description: 'The category of the LegoBuilding.  Enum:'' legoStreetLight, legoTrain, legoRadar, legoRailoadSwitch, legoToll, legoCrane, legoWheaterStation '''
-          items:
-            enum:
-              - legoStreetLight
-              - legoTrain
-              - legoRadar
-              - legoRailoadSwitch
-              - legoToll
-              - legoCrane
-              - legoWheaterStation
-            type: string
-          type: array
-          x-ngsi:
-            type: Property
-        collapseRisk:
-          description: Probability of total collapse of the building
-          maximum: 1
-          minimum: 0
-          type: number
-          x-ngsi:
-            model: https://schema.org/Number
-            type: Property
-        coordinatesOnLegoCity:
-          description: The coordinates of the LegoBuilding in the LegoCity
-          type: object
-          x-ngsi:
-            type: GeoProperty
-          properties:
-            coordinates:
-              type: array
-              minItems: 2
-              items:
-                type: number
-                minimum: -100
-                maximum: 100
-        dataProvider:
-          description: A sequence of characters identifying the provider of the harmonised data entity
-          type: string
-          x-ngsi:
-            type: Property
-        dateCreated:
-          description: Entity creation timestamp. This will usually be allocated by the storage platform
-          format: date-time
-          type: string
-          x-ngsi:
-            type: Property
-        dateModified:
-          description: Timestamp of the last modification of the entity. This will usually be allocated by the storage platform
-          format: date-time
-          type: string
-          x-ngsi:
-            type: Property
 
-        description:
-          description: A description of this item
-          type: string
-          x-ngsi:
-            type: Property
-        floorsAboveGround:
-          description: Floors above the ground level
-          type: number
-          x-ngsi:
-            model: https://schema.org/Number
-            type: Property
-        floorsBelowGround:
-          description: Floors below the ground level
-          type: number
-          x-ngsi:
-            model: https://schema.org/Number
-            type: Property
-        id:
-          anyOf:
-            - description: Identifier format of any NGSI entity
-              maxLength: 256
-              minLength: 1
-              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
-              type: string
-              x-ngsi:
-                type: Property
-            - description: Identifier format of any NGSI entity
-              format: uri
-              type: string
-              x-ngsi:
-                type: Property
-          description: Unique identifier of the entity
-          x-ngsi:
-            type: Property
+        # # Sensors for the street light
+        presence:
+          $ref: "#/components/schemas/pirSensor"
+        lightIntensity:
+          $ref: "#/components/schemas/photoresistorSensor"
+        # pirSensor:
+        #   $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/motion
+        # ledDetection:
+        #   $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/sensor
 
 
-        mapUrl:
-          anyOf:
-            - description: Identifier format of any NGSI entity
-              maxLength: 256
-              minLength: 1
-              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
-              type: string
-              x-ngsi:
-                type: Property
-            - description: Identifier format of any NGSI entity
-              format: uri
-              type: string
-              x-ngsi:
-                type: Property
-          description: Reference to the map containing the building
-          x-ngsi:
-            type: Relationship
-        name:
-          description: The name of this item
-          type: string
-          x-ngsi:
-            type: Property
-        occupier:
-          description: Person or entity using the building
-          items:
-            anyOf:
-              - description: Identifier format of any NGSI entity
-                maxLength: 256
-                minLength: 1
-                pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
-                type: string
-                x-ngsi:
-                  type: Property
-              - description: Identifier format of any NGSI entity
-                format: uri
-                type: string
-                x-ngsi:
-                  type: Property
-            description: Unique identifier of the entity
-            x-ngsi:
-              type: Property
-          type: array
-          x-ngsi:
-            model: https://schema.org/URL
-            type: Relationship
-        openingHours:
-          description: Opening hours of this building
-          items:
-            type: string
-          type: array
-          x-ngsi:
-            model: https://schema.org/openingHours
-            type: Property
-        owner:
-          description: A List containing a JSON encoded sequence of characters referencing the unique Ids of the owner(s)
-          items:
-            anyOf:
-              - description: Identifier format of any NGSI entity
-                maxLength: 256
-                minLength: 1
-                pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
-                type: string
-                x-ngsi:
-                  type: Property
-              - description: Identifier format of any NGSI entity
-                format: uri
-                type: string
-                x-ngsi:
-                  type: Property
-            description: Unique identifier of the entity
-            x-ngsi:
-              type: Property
-          type: array
-          x-ngsi:
-            type: Property
-        peopleCapacity:
-          description: Allowed people present at the building
-          minimum: 0
-          type: number
-          x-ngsi:
-            model: https://schema.org/Number
-            type: Property
-        peopleOccupancy:
-          description: People present at the building
-          minimum: 0
-          type: number
-          x-ngsi:
-            model: https://schema.org/Number
-            type: Property
-        seeAlso:
-          description: list of uri pointing to additional resources about the item
-          oneOf:
-            - items:
-                format: uri
-                type: string
-              minItems: 1
-              type: array
-            - format: uri
-              type: string
-          x-ngsi:
-            type: Property
-        source:
-          description: 'A sequence of characters giving the original source of the entity data as a URL. Recommended to be the fully qualified domain name of the source provider, or the URL to the source object'
-          type: string
-          x-ngsi:
-            type: Property
-        type:
-          description: NGSI Entity type
-          enum:
-            - LegoBuilding
-          type: string
-          x-ngsi:
-            type: Property
-      required:
-        - type
-        - id
-        - category
-      type: object
-      x-derived-from: https://github.com/smart-data-models/dataModel.Building/blob/master/Building/LICENSE.md
-      x-model-tags: ""
-      x-version: 0.0.3
+        # # Actuator for the street light
+        stateLed:
+          $ref: "#/components/schemas/ledDetection"
+        stateLight:
+          $ref: "#/components/schemas/light"
+        # ledDetection:
+        #   $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/temperature
+        # light:
+        #   $ref: https://fiware.github.io/tutorials.NGSI-LD/models/saref-terms.yaml#/fillingLevel
 
+
+    LegoTrain:
+      title: "LegoTrain"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building" 
+      properties:
+        # Sensors for the train
+
+        velocityControl:
+          $ref: "#/components/schemas/potentiometerSensor"
+
+        # Actuator for the train
+        velocityEngine:
+          $ref: "#/components/schemas/engineDC"
+        
+
+    LegoRadar:
+      title: "LegoRadar"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building" 
+      properties:
+        # Sensors for the radar
+        presence:
+          $ref: "#/components/schemas/infraredSensor"
+        
+        # Actuator for the radar
+        on:
+          $ref: "#/components/schemas/camera"
+        # camera:
+          # $ref: "#/components/schemas/camera"
+
+
+    LegoRailoadSwitch:
+      title: "LegoRailoadSwitch"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building" 
+      properties:
+        # Sensors for the railroad switch
+        state:
+          $ref: "#/components/schemas/switchSensor"
+
+        # Actuator for the railroad switch
+        stateMotor:
+          $ref: "#/components/schemas/servmotor"
+        # servmotor:
+          # $ref: "#/components/schemas/servmotor"
+    
+    
+    LegoToll:
+      title: "LegoToll"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building" 
+      properties:
+        # Sensors for the toll
+        uiddcode:
+          $ref: "#/components/schemas/rfidSensor"
+
+    LegoCrane:
+      title: "LegoCrane"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building" 
+      properties:
+        # Sensors for the crane
+        distance:
+          $ref: "#/components/schemas/ultrasondSensor"
+
+        # Actuator for the toll
+        # value:
+          # $ref: "#/components/schemas/value"
+    LegoWheaterStation:
+      title: "LegoWheaterStation"
+      allOf:
+        - $ref: "https://smart-data-models.github.io/dataModel.Building/Building/model.yaml#/Building"
+      properties:
+        # Sensors for the wheater station
+        temperature:
+          $ref: "#/components/schemas/temperatureSensor"
+        humidity:
+          $ref: "#/components/schemas/humiditySensor"
+  
     ############ ############ ############ ############ ############ ############ ############ ############ ############ 
     ############ ############ Sensors 
     ############ ############ ############ ############ ############ ############ ############ ############ ############ 
     
     #PIR 
-    PirSensor:
+    pirSensor:
       type: object
       required:
         -  presence
@@ -299,7 +177,7 @@ components:
 
 
     # Photoresistor
-    PhotoresistorSensor:
+    photoresistorSensor:
       type: object
       required:
         - lightIntensity
@@ -319,7 +197,7 @@ components:
 
 
     # Potentiometer
-    PotentiometerSensor:
+    potentiometerSensor:
       type: object
       required:
         -  velocityControl
@@ -338,7 +216,7 @@ components:
           description: 'Position of the switch to select the engine speed, it has values from 0 to 128 ["unitCode": "none"]'
 
     # Infrared
-    InfraredSensor:
+    infraredSensor:
       type: object
       required:
         -  presence
@@ -358,7 +236,7 @@ components:
 
 
     # Switch
-    SwitchSensor:
+    switchSensor:
       type: object
       required:
         -  state
@@ -381,7 +259,7 @@ components:
 
 
     # # RFID
-    RfidSensor:
+    rfidSensor:
       type: object
       required:
         -  uiddcode
@@ -403,7 +281,7 @@ components:
 
 
     # # Ultrasond
-    UltrasondSensor:
+    ultrasondSensor:
       type: object
       required:
         -  distance
@@ -425,7 +303,7 @@ components:
 
 
     # Temperature
-    TemperatureSensor:
+    temperatureSensor:
       type: object
       required:
         -  temperature
@@ -449,7 +327,7 @@ components:
 
 
     # Humidity
-    HumiditySensor:
+    humiditySensor:
       type: object
       required:
         -  humidity
@@ -474,7 +352,7 @@ components:
     ############ ############ Actuators 
     ############ ############ ############ ############ ############ ############ ############ ############ ############ 
 
-    LedDetection:
+    ledDetection:
       type: object
       required:
         -  stateLed
@@ -491,7 +369,7 @@ components:
             model: https://schema.org/QuantitativeValue
             type: Property
 
-    Light:
+    light:
       type: object
       required:
         -  stateLight
@@ -508,7 +386,7 @@ components:
             model: https://schema.org/QuantitativeValue
             type: Property
 
-    EngineDC:
+    engineDC:
       type: object
       required:
         -  velocityEngine
@@ -525,7 +403,7 @@ components:
             model: https://schema.org/QuantitativeValue
             type: Property
 
-    Camera:
+    camera:
       type: object
       required:
         -  on
@@ -535,7 +413,7 @@ components:
         # - $ref: https://fiware.github.io/tutorials.NGSI-LD/models/device.yaml#/Device
         - $ref: https://smart-data-models.github.io/dataModel.Device/Camera/model.yaml#/Camera
 
-    Servmotor:
+    servmotor:
       type: object
       required:
         -  stateMotor
